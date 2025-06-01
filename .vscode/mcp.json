@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "my-mcp-server-humanoid": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/workspaces/robot-mcp-server/humanoid",
+        "run",
+        "mcp",
+        "run",
+        "server.py"
+      ]
+    }
+  }
+}
