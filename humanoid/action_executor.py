@@ -1,6 +1,7 @@
 import logging
 import os
 import queue
+import tempfile
 import threading
 import time
 from typing import Any, Dict, Optional
@@ -11,6 +12,8 @@ import requests
 # Extract localhost and port into variables, load from env if provided
 ROBOT_API_HOST = os.environ.get("ROBOT_API_HOST", "localhost")
 ROBOT_API_PORT = os.environ.get("ROBOT_API_PORT", "9030")
+ROBOT_IMAGE_API_PORT = os.environ.get("ROBOT_IMAGE_API_PORT", "8080")
+ROBOT_IMAGE_API_URL = f"http://{ROBOT_API_HOST}:{ROBOT_IMAGE_API_PORT}/?action=snapshot"
 ROBOT_API_URL = f"http://{ROBOT_API_HOST}:{ROBOT_API_PORT}/"
 
 # 動作配置字典 (Action configuration dictionary)
@@ -234,3 +237,22 @@ class ActionExecutor:
     def shutdown(self) -> None:
         self._stop_event.set()
         self.consumer_thread.join()
+
+    def get_image(self) -> Optional[str]:
+        try:
+            response = requests.get(ROBOT_IMAGE_API_URL, timeout=1)
+            response.raise_for_status()
+            if response.headers.get("Content-Type") == "image/jpeg":
+                with tempfile.NamedTemporaryFile(
+                    delete=False, suffix=".jpg", mode="wb"
+                ) as tmp_file:
+                    tmp_file.write(response.content)
+                    return tmp_file.name
+            else:
+                self.logger.error(
+                    "Unexpected content type: %s", response.headers.get("Content-Type")
+                )
+                return None
+        except requests.exceptions.RequestException as e:
+            self.logger.error("Error fetching image: %s", e)
+            return None

@@ -1,5 +1,6 @@
 from action_executor import ActionExecutor
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Image
+from PIL import Image as PILImage
 
 mcp = FastMCP("Echo")
 
@@ -291,3 +292,16 @@ def wing_chun() -> str:
     """Command the robot to perform Wing Chun moves."""
     executor.add_action_to_queue("wing_chun")
     return "The robot is performing Wing Chun moves."
+
+
+@mcp.tool()
+def get_image() -> str:
+    """Get the current image from the robot's camera."""
+
+    image_path = executor.get_image()
+    if not image_path:
+        return "No image available."
+    # Return the image path or URL
+    else:
+        img = PILImage.open(image_path)
+        return Image(data=img.tobytes(), format="png")
