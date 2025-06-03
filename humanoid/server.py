@@ -1,6 +1,7 @@
 from action_executor import ActionExecutor
 from mcp.server.fastmcp import FastMCP, Image
 from PIL import Image as PILImage
+import io
 
 mcp = FastMCP("Echo")
 
@@ -304,4 +305,7 @@ def get_image() -> str:
     # Return the image path or URL
     else:
         img = PILImage.open(image_path)
-        return Image(data=img.tobytes(), format="png")
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG")
+        img_bytes = buf.getvalue()
+        return Image(data=img_bytes, format="jpeg")
