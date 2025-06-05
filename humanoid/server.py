@@ -1,9 +1,12 @@
+import io
+
 from action_executor import ActionExecutor
 from mcp.server.fastmcp import FastMCP, Image
 from PIL import Image as PILImage
-import io
 
-mcp = FastMCP("Echo")
+mcp = FastMCP(
+    name="Humanoid Controller", description="Controller for humanoid robot actions"
+)
 
 # Instantiate the executor
 executor = ActionExecutor()
