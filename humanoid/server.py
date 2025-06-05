@@ -5,38 +5,16 @@ from mcp.server.fastmcp import FastMCP, Image
 from PIL import Image as PILImage
 
 mcp = FastMCP(
-    name="Humanoid Controller", description="Controller for humanoid robot actions"
+    name="Humanoid Controller",
+    description="Controller for humanoid robot actions",
+    settings={
+        "port": 8000,
+        "host": "0.0.0.0",
+    },
 )
 
 # Instantiate the executor
 executor = ActionExecutor()
-
-
-@mcp.tool()
-def add_action_to_queue(action_name: str) -> str:
-    """Add a new action to the queue."""
-    executor.add_action_to_queue(action_name)
-    return f"Action '{action_name}' added to queue."
-
-
-@mcp.tool()
-def remove_action_from_queue(action_id: str) -> str:
-    """Remove an action from the queue by its ID."""
-    executor.remove_action_from_queue(action_id)
-    return f"Action with ID '{action_id}' removed from queue."
-
-
-@mcp.tool()
-def clear_action_queue() -> str:
-    """Clear all actions from the queue."""
-    executor.clear_action_queue()
-    return "Action queue cleared."
-
-
-@mcp.tool()
-def get_queue_status() -> dict:
-    """Get the current status of the action queue."""
-    return executor.get_queue_status()
 
 
 @mcp.tool()
@@ -312,3 +290,8 @@ def get_image() -> str:
         img.save(buf, format="JPEG")
         img_bytes = buf.getvalue()
         return Image(data=img_bytes, format="jpeg")
+
+
+if __name__ == "__main__":
+    # Initialize and run the server
+    mcp.run()
