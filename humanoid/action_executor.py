@@ -13,8 +13,14 @@ import requests
 ROBOT_API_HOST = os.environ.get("ROBOT_API_HOST", "localhost")
 ROBOT_API_PORT = os.environ.get("ROBOT_API_PORT", "9030")
 ROBOT_IMAGE_API_PORT = os.environ.get("ROBOT_IMAGE_API_PORT", "8080")
-ROBOT_IMAGE_API_URL = f"http://{ROBOT_API_HOST}:{ROBOT_IMAGE_API_PORT}/?action=snapshot"
-ROBOT_API_URL = f"http://{ROBOT_API_HOST}:{ROBOT_API_PORT}/"
+ROBOT_API_PROTOCOL = os.environ.get("ROBOT_API_PROTOCOL", "http")
+ROBOT_IMAGE_API_URL = os.environ.get(
+    "ROBOT_IMAGE_API_URL",
+    f"{ROBOT_API_PROTOCOL}://{ROBOT_API_HOST}:{ROBOT_IMAGE_API_PORT}/?action=snapshot",
+)
+ROBOT_API_URL = os.environ.get(
+    "ROBOT_API_URL", f"{ROBOT_API_PROTOCOL}://{ROBOT_API_HOST}:{ROBOT_API_PORT}/"
+)
 
 # 動作配置字典 (Action configuration dictionary)
 actions: Dict[str, Dict[str, Any]] = {
@@ -240,7 +246,7 @@ class ActionExecutor:
 
     def get_image(self) -> Optional[str]:
         try:
-            response = requests.get(ROBOT_IMAGE_API_URL, timeout=1)
+            response = requests.get(ROBOT_IMAGE_API_URL, timeout=3)
             response.raise_for_status()
             if response.headers.get("Content-Type") == "image/jpeg":
                 with tempfile.NamedTemporaryFile(
