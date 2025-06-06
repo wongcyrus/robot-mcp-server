@@ -132,7 +132,7 @@ class ActionExecutor:
             data["params"] = params
         try:
             response = requests.post(
-                ROBOT_API_URL, headers=headers, json=data, timeout=0.5
+                ROBOT_API_URL, headers=headers, json=data, timeout=3
             )
             response.raise_for_status()
             self.logger.info("%s Response: %s", log_success_msg, response.json())
