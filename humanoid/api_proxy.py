@@ -1,9 +1,6 @@
 import logging
 import os
-import queue
 import tempfile
-import threading
-import time
 from typing import Any, Dict, Optional
 from uuid import uuid4
 
@@ -87,17 +84,19 @@ actions: Dict[str, Dict[str, Any]] = {
 idle_action: Dict[str, Any] = {"name": None, "sleep_time": 0}
 
 
-class ActionExecutor:
+def get_action_by_name(action_name: str) -> Optional[Dict[str, Any]]:
+    """Get action config by name, or None if not found."""
+    return actions.get(action_name)
+
+
+def sanitize_action_name(action_name: str) -> str:
+    """Sanitize action_name to remove extra info or whitespace."""
+    return action_name.strip().split()[0]
+
+
+class ApiProxy:
     def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
-        self.action_queue: queue.Queue = queue.Queue()
-        self.current_action: Dict[str, Any] = idle_action.copy()
-        self.is_running: bool = False
-        self._immediate_stop_event = threading.Event()
-        self.queue_lock = threading.Lock()
-        self._stop_event = threading.Event()
-        self.consumer_thread = threading.Thread(target=self._consumer, daemon=True)
-        self.consumer_thread.start()
 
     def _run_action(self, p1: str, p2: str) -> Optional[Dict[str, Any]]:
         return self._send_request(
@@ -143,111 +142,31 @@ class ActionExecutor:
 
     def _execute_action(self, action_item: Dict[str, Any]) -> None:
         action_name = action_item["name"]
-        action = actions[action_name]
-        self.current_action = {
-            "name": action["name"],
-            "sleep_time": action["sleep_time"],
-        }
+        action = get_action_by_name(action_name)
+        if not action:
+            self.logger.error(
+                "Action '%s' not found in actions dictionary.", action_name
+            )
+            return
         try:
             self._run_action(action["action"][0], action["action"][1])
-            elapsed = 0.0
-            while elapsed < action["sleep_time"]:
-                if self._immediate_stop_event.is_set():
-                    self.logger.info("Stopping action execution for %s", action_name)
-                    self._immediate_stop_event.clear()
-                    self._run_stop_action()
-                    break
-                time.sleep(0.1)
-                elapsed += 0.1
         except Exception as e:
             self.logger.error("Error executing action %s: %s", action_name, e)
-        finally:
-            self._remove_action_by_id(action_item["id"])
-            self.current_action = idle_action.copy()
-
-    def _remove_action_by_id(self, action_id: str) -> None:
-        with self.queue_lock:
-            temp_list = list(self.action_queue.queue)
-            filtered = [item for item in temp_list if item["id"] != action_id]
-            self._replace_queue(filtered)
-
-    def _replace_queue(self, items: list) -> None:
-        self.action_queue.queue.clear()
-        for item in items:
-            self.action_queue.put(item)
-
-    def _consumer(self) -> None:
-        time.sleep(5 - time.time() % 5)
-        while not self._stop_event.is_set():
-            try:
-                if self._immediate_stop_event.is_set():
-                    self.logger.info(
-                        "Immediate stop triggered, clearing queue and setting to idle."
-                    )
-                    self.clear_action_queue()
-                    self.current_action = idle_action.copy()
-                    self.is_running = False
-                    self._immediate_stop_event.clear()
-                    time.sleep(0.5)
-                    continue
-                time.sleep(1 - time.time() % 1)
-                action_item = self.action_queue.get(timeout=1)
-                self.is_running = True
-                self._execute_action(action_item)
-                time.sleep(0.5)
-            except queue.Empty:
-                self.is_running = False
-                time.sleep(0.5)
 
     def execute_action(self, action_name: str) -> None:
-        """Execute an action immediately."""
-        self.logger.info("Executing action: %s", action_name)
-        self.add_action_to_queue(action_name)
-
-    def add_action_to_queue(self, action_name: str) -> None:
-        # Sanitize action_name to remove extra info or whitespace
-        clean_name = action_name.strip().split()[0]
+        clean_name = sanitize_action_name(action_name)
         action_id = str(uuid4())
         if clean_name == "stop":
-            self.stop()
+            self._run_stop_action()
+            self.logger.info("Stop action requested, stopping current action.")
             return
-        if clean_name not in actions:
+        action = get_action_by_name(clean_name)
+        if not action:
             self.logger.error(
                 "Action '%s' not found in actions dictionary.", clean_name
             )
             return
-        with self.queue_lock:
-            self.action_queue.put({"id": action_id, "name": clean_name})
-
-    def remove_action_from_queue(self, action_id: str) -> None:
-        self._remove_action_by_id(action_id)
-
-    def clear_action_queue(self) -> None:
-        with self.queue_lock:
-            self.action_queue.queue.clear()
-
-    def get_queue_status(self) -> Dict[str, Any]:
-        with self.queue_lock:
-            queue_items = list(self.action_queue.queue)
-        return {
-            "queue": queue_items,
-            "current_action": self.current_action,
-            "is_running": self.is_running,
-        }
-
-    def stop(self) -> None:
-        self.logger.info(
-            "Immediate stop requested: clearing queue and interrupting current action."
-        )
-        self._immediate_stop_event.set()
-        self.clear_action_queue()
-        with self.queue_lock:
-            stand_id = str(uuid4())
-            self.action_queue.put({"id": stand_id, "name": "stand"})
-
-    def shutdown(self) -> None:
-        self._stop_event.set()
-        self.consumer_thread.join()
+        self._execute_action({"id": action_id, "name": clean_name})
 
     def get_image(self) -> Optional[str]:
         try:

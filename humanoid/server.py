@@ -1,6 +1,8 @@
 import io
 
 from action_executor import ActionExecutor
+from api_proxy import ApiProxy
+import os
 from mcp.server.fastmcp import FastMCP, Image
 from PIL import Image as PILImage
 
@@ -13,266 +15,269 @@ mcp = FastMCP(
     },
 )
 
+if os.getenv("USE_API_PROXY", "true").lower() == "true":
 # Instantiate the executor
-executor = ActionExecutor()
+    executor = ApiProxy()
+else
+    executor = ActionExecutor()
 
 
 @mcp.tool()
 def back_fast() -> str:
     """Command the robot to move backward quickly."""
-    executor.add_action_to_queue("back_fast")
+    executor.execute_action("back_fast")
     return "The robot is moving backward quickly."
 
 
 @mcp.tool()
 def bow() -> str:
     """Command the robot to bow."""
-    executor.add_action_to_queue("bow")
+    executor.execute_action("bow")
     return "The robot is bowing."
 
 
 @mcp.tool()
 def chest() -> str:
     """Command the robot to perform chest exercises."""
-    executor.add_action_to_queue("chest")
+    executor.execute_action("chest")
     return "The robot is performing chest exercises."
 
 
 @mcp.tool()
 def dance_eight() -> str:
     """Command the robot to perform dance eight."""
-    executor.add_action_to_queue("dance_eight")
+    executor.execute_action("dance_eight")
     return "The robot is performing dance eight."
 
 
 @mcp.tool()
 def dance_five() -> str:
     """Command the robot to perform dance five."""
-    executor.add_action_to_queue("dance_five")
+    executor.execute_action("dance_five")
     return "The robot is performing dance five."
 
 
 @mcp.tool()
 def dance_four() -> str:
     """Command the robot to perform dance four."""
-    executor.add_action_to_queue("dance_four")
+    executor.execute_action("dance_four")
     return "The robot is performing dance four."
 
 
 @mcp.tool()
 def dance_nine() -> str:
     """Command the robot to perform dance nine."""
-    executor.add_action_to_queue("dance_nine")
+    executor.execute_action("dance_nine")
     return "The robot is performing dance nine."
 
 
 @mcp.tool()
 def dance_seven() -> str:
     """Command the robot to perform dance seven."""
-    executor.add_action_to_queue("dance_seven")
+    executor.execute_action("dance_seven")
     return "The robot is performing dance seven."
 
 
 @mcp.tool()
 def dance_six() -> str:
     """Command the robot to perform dance six."""
-    executor.add_action_to_queue("dance_six")
+    executor.execute_action("dance_six")
     return "The robot is performing dance six."
 
 
 @mcp.tool()
 def dance_ten() -> str:
     """Command the robot to perform dance ten."""
-    executor.add_action_to_queue("dance_ten")
+    executor.execute_action("dance_ten")
     return "The robot is performing dance ten."
 
 
 @mcp.tool()
 def dance_three() -> str:
     """Command the robot to perform dance three."""
-    executor.add_action_to_queue("dance_three")
+    executor.execute_action("dance_three")
     return "The robot is performing dance three."
 
 
 @mcp.tool()
 def dance_two() -> str:
     """Command the robot to perform dance two."""
-    executor.add_action_to_queue("dance_two")
+    executor.execute_action("dance_two")
     return "The robot is performing dance two."
 
 
 @mcp.tool()
 def go_forward() -> str:
     """Command the robot to move forward in the direction it is currently facing."""
-    executor.add_action_to_queue("go_forward")
+    executor.execute_action("go_forward")
     return "The robot is moving forward."
 
 
 @mcp.tool()
 def kung_fu() -> str:
     """Command the robot to perform kung fu moves."""
-    executor.add_action_to_queue("kung_fu")
+    executor.execute_action("kung_fu")
     return "The robot is performing kung fu moves."
 
 
 @mcp.tool()
 def left_kick() -> str:
     """Command the robot to perform a left kick."""
-    executor.add_action_to_queue("left_kick")
+    executor.execute_action("left_kick")
     return "The robot is performing a left kick."
 
 
 @mcp.tool()
 def left_move_fast() -> str:
     """Command the robot to move left quickly."""
-    executor.add_action_to_queue("left_move_fast")
+    executor.execute_action("left_move_fast")
     return "The robot is moving left quickly."
 
 
 @mcp.tool()
 def left_shot_fast() -> str:
     """Command the robot to perform a fast left punch."""
-    executor.add_action_to_queue("left_shot_fast")
+    executor.execute_action("left_shot_fast")
     return "The robot is performing a fast left punch."
 
 
 @mcp.tool()
 def left_uppercut() -> str:
     """Command the robot to perform a left uppercut."""
-    executor.add_action_to_queue("left_uppercut")
+    executor.execute_action("left_uppercut")
     return "The robot is performing a left uppercut."
 
 
 @mcp.tool()
 def push_ups() -> str:
     """Command the robot to perform push-ups."""
-    executor.add_action_to_queue("push_ups")
+    executor.execute_action("push_ups")
     return "The robot is performing push-ups."
 
 
 @mcp.tool()
 def right_kick() -> str:
     """Command the robot to perform a right kick."""
-    executor.add_action_to_queue("right_kick")
+    executor.execute_action("right_kick")
     return "The robot is performing a right kick."
 
 
 @mcp.tool()
 def right_move_fast() -> str:
     """Command the robot to move right quickly."""
-    executor.add_action_to_queue("right_move_fast")
+    executor.execute_action("right_move_fast")
     return "The robot is moving right quickly."
 
 
 @mcp.tool()
 def right_shot_fast() -> str:
     """Command the robot to perform a fast right punch."""
-    executor.add_action_to_queue("right_shot_fast")
+    executor.execute_action("right_shot_fast")
     return "The robot is performing a fast right punch."
 
 
 @mcp.tool()
 def right_uppercut() -> str:
     """Command the robot to perform a right uppercut."""
-    executor.add_action_to_queue("right_uppercut")
+    executor.execute_action("right_uppercut")
     return "The robot is performing a right uppercut."
 
 
 @mcp.tool()
 def sit_ups() -> str:
     """Command the robot to perform sit-ups."""
-    executor.add_action_to_queue("sit_ups")
+    executor.execute_action("sit_ups")
     return "The robot is performing sit-ups."
 
 
 @mcp.tool()
 def squat() -> str:
     """Command the robot to squat down."""
-    executor.add_action_to_queue("squat")
+    executor.execute_action("squat")
     return "The robot is squatting down."
 
 
 @mcp.tool()
 def squat_up() -> str:
     """Command the robot to stand up from a squat."""
-    executor.add_action_to_queue("squat_up")
+    executor.execute_action("squat_up")
     return "The robot is standing up from a squat."
 
 
 @mcp.tool()
 def stand() -> str:
     """Command the robot to stand up and maintain a standing position."""
-    executor.add_action_to_queue("stand")
+    executor.execute_action("stand")
     return "The robot is standing up."
 
 
 @mcp.tool()
 def stand_up_back() -> str:
     """Command the robot to stand up from the back."""
-    executor.add_action_to_queue("stand_up_back")
+    executor.execute_action("stand_up_back")
     return "The robot is standing up from the back."
 
 
 @mcp.tool()
 def stand_up_front() -> str:
     """Command the robot to stand up from the front."""
-    executor.add_action_to_queue("stand_up_front")
+    executor.execute_action("stand_up_front")
     return "The robot is standing up from the front."
 
 
 @mcp.tool()
 def stepping() -> str:
     """Command the robot to perform stepping motions."""
-    executor.add_action_to_queue("stepping")
+    executor.execute_action("stepping")
     return "The robot is performing stepping motions."
 
 
 @mcp.tool(name="stop")
 def stop() -> str:
     """Command the robot to perform stopping motions."""
-    executor.add_action_to_queue("stop")
+    executor.execute_action("stop")
     return "The robot is stopping."
 
 
 @mcp.tool()
 def turn_left() -> str:
     """Command the robot to turn left."""
-    executor.add_action_to_queue("turn_left")
+    executor.execute_action("turn_left")
     return "The robot is turning left."
 
 
 @mcp.tool()
 def turn_right() -> str:
     """Command the robot to turn right."""
-    executor.add_action_to_queue("turn_right")
+    executor.execute_action("turn_right")
     return "The robot is turning right."
 
 
 @mcp.tool()
 def twist() -> str:
     """Command the robot to twist its body."""
-    executor.add_action_to_queue("twist")
+    executor.execute_action("twist")
     return "The robot is twisting its body."
 
 
 @mcp.tool()
 def wave() -> str:
     """Command the robot to wave its hand."""
-    executor.add_action_to_queue("wave")
+    executor.execute_action("wave")
     return "The robot is waving its hand."
 
 
 @mcp.tool()
 def weightlifting() -> str:
     """Command the robot to perform weightlifting."""
-    executor.add_action_to_queue("weightlifting")
+    executor.execute_action("weightlifting")
     return "The robot is performing weightlifting."
 
 
 @mcp.tool()
 def wing_chun() -> str:
     """Command the robot to perform Wing Chun moves."""
-    executor.add_action_to_queue("wing_chun")
+    executor.execute_action("wing_chun")
     return "The robot is performing Wing Chun moves."
 
 
