@@ -853,7 +853,7 @@ def get_image(
 ) -> str:
     """Get the current image from the robot's camera."""
 
-    image_path = executor.get_image()
+    image_path = executor.get_image(robot_id)
     if not image_path:
         return "No image available."
     # Return the image path or URL
