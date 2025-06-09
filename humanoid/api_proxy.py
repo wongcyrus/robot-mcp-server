@@ -2,11 +2,10 @@ import logging
 import os
 import tempfile
 from typing import Any, Dict, Optional
-from uuid import uuid4
 
 import requests
 
-# Extract localhost and port into variables, load from env if provided
+# Load environment variables for robot API
 ROBOT_API_HOST = os.environ.get("ROBOT_API_HOST", "localhost")
 ROBOT_API_PORT = os.environ.get("ROBOT_API_PORT", "9030")
 ROBOT_IMAGE_API_PORT = os.environ.get("ROBOT_IMAGE_API_PORT", "8080")
@@ -84,93 +83,62 @@ actions: Dict[str, Dict[str, Any]] = {
 idle_action: Dict[str, Any] = {"name": None, "sleep_time": 0}
 
 
-def get_action_by_name(action_name: str) -> Optional[Dict[str, Any]]:
-    """Get action config by name, or None if not found."""
-    return actions.get(action_name)
-
-
-def sanitize_action_name(action_name: str) -> str:
-    """Sanitize action_name to remove extra info or whitespace."""
-    return action_name.strip().split()[0]
-
-
 class ApiProxy:
     def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
 
-    def _run_action(self, p1: str, p2: str) -> Optional[Dict[str, Any]]:
-        return self._send_request(
-            method="RunAction",
-            params=[p1, p2],
-            log_success_msg=f"Action run_action({p1}, {p2}) successful.",
-            log_error_msg=f"Error running action run_action({p1}, {p2}):",
-        )
+    @staticmethod
+    def _sanitize_action_name(action_name: str) -> str:
+        """Sanitize action_name to remove extra info or whitespace."""
+        return action_name.strip().split()[0]
 
-    def _run_stop_action(self) -> Optional[Dict[str, Any]]:
-        return self._send_request(
-            method="StopBusServo",
-            params=["stopAction"],
-            log_success_msg="Action run_stop_action() successful.",
-            log_error_msg="Error running action run_stop_action():",
+    @staticmethod
+    def _get_action(action_name: str) -> Optional[Dict[str, Any]]:
+        """Get action config by name, or None if not found."""
+        return actions.get(action_name)
+
+    def execute_action(self, robot_id: str, action_name: str) -> None:
+        clean_name = self._sanitize_action_name(action_name)
+        if clean_name == "stop":
+            self._send_request(
+                method="StopBusServo",
+                robot_id=robot_id,
+                action="StopAction",
+                log_msg="Action run_stop_action() successful.",
+            )
+            self.logger.info("Stop action requested, stopping current action.")
+            return
+        action = self._get_action(clean_name)
+        if not action:
+            self.logger.error("Action '%s' not found.", clean_name)
+            return
+        self._send_request(
+            method="RunAction",
+            robot_id=robot_id,
+            action=clean_name,
+            log_msg=f"Action run_action({clean_name}) successful.",
         )
 
     def _send_request(
         self,
         method: str,
-        params: Optional[list],
-        log_success_msg: str,
-        log_error_msg: str,
+        robot_id: str,
+        action: str,
+        log_msg: str,
     ) -> Optional[Dict[str, Any]]:
-        headers = {"deviceid": "1732853986186"}
-        data = {
-            "id": "1732853986186",
-            "jsonrpc": "2.0",
-            "method": method,
-        }
-        if params is not None:
-            data["params"] = params
+        data = {"method": method, "action": action}
         try:
-            response = requests.post(
-                ROBOT_API_URL, headers=headers, json=data, timeout=3
-            )
+            response = requests.post(ROBOT_API_URL + robot_id, json=data, timeout=3)
             response.raise_for_status()
-            self.logger.info("%s Response: %s", log_success_msg, response.json())
+            self.logger.info("%s Response: %s", log_msg, response.json())
             return response.json()
-        except requests.exceptions.RequestException as e:
-            self.logger.error("%s %s", log_error_msg, e)
+        except requests.RequestException as e:
+            self.logger.error("%s", e)
             return None
 
-    def _execute_action(self, action_item: Dict[str, Any]) -> None:
-        action_name = action_item["name"]
-        action = get_action_by_name(action_name)
-        if not action:
-            self.logger.error(
-                "Action '%s' not found in actions dictionary.", action_name
-            )
-            return
+    def get_image(self, robot_id: str) -> Optional[str]:
         try:
-            self._run_action(action["action"][0], action["action"][1])
-        except Exception as e:
-            self.logger.error("Error executing action %s: %s", action_name, e)
-
-    def execute_action(self, action_name: str) -> None:
-        clean_name = sanitize_action_name(action_name)
-        action_id = str(uuid4())
-        if clean_name == "stop":
-            self._run_stop_action()
-            self.logger.info("Stop action requested, stopping current action.")
-            return
-        action = get_action_by_name(clean_name)
-        if not action:
-            self.logger.error(
-                "Action '%s' not found in actions dictionary.", clean_name
-            )
-            return
-        self._execute_action({"id": action_id, "name": clean_name})
-
-    def get_image(self) -> Optional[str]:
-        try:
-            response = requests.get(ROBOT_IMAGE_API_URL, timeout=3)
+            response = requests.get(ROBOT_IMAGE_API_URL + robot_id, timeout=3)
             response.raise_for_status()
             if response.headers.get("Content-Type") == "image/jpeg":
                 with tempfile.NamedTemporaryFile(
@@ -178,11 +146,10 @@ class ApiProxy:
                 ) as tmp_file:
                     tmp_file.write(response.content)
                     return tmp_file.name
-            else:
-                self.logger.error(
-                    "Unexpected content type: %s", response.headers.get("Content-Type")
-                )
-                return None
-        except requests.exceptions.RequestException as e:
+            self.logger.error(
+                "Unexpected content type: %s", response.headers.get("Content-Type")
+            )
+            return None
+        except requests.RequestException as e:
             self.logger.error("Error fetching image: %s", e)
             return None

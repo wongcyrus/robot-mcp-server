@@ -1,10 +1,10 @@
 import io
+from typing import Annotated, Literal
 
-from action_executor import ActionExecutor
 from api_proxy import ApiProxy
-import os
 from mcp.server.fastmcp import FastMCP, Image
 from PIL import Image as PILImage
+from pydantic import Field
 
 mcp = FastMCP(
     name="Humanoid Controller",
@@ -15,274 +15,842 @@ mcp = FastMCP(
     },
 )
 
-if os.getenv("USE_API_PROXY", "true").lower() == "true":
+
 # Instantiate the executor
-    executor = ApiProxy()
-else
-    executor = ActionExecutor()
+executor = ApiProxy()
 
 
 @mcp.tool()
-def back_fast() -> str:
+def back_fast(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to move backward quickly."""
-    executor.execute_action("back_fast")
+    executor.execute_action(robot_id, "back_fast")
     return "The robot is moving backward quickly."
 
 
 @mcp.tool()
-def bow() -> str:
+def bow(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to bow."""
-    executor.execute_action("bow")
+    executor.execute_action(robot_id, "bow")
     return "The robot is bowing."
 
 
 @mcp.tool()
-def chest() -> str:
+def chest(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform chest exercises."""
-    executor.execute_action("chest")
+    executor.execute_action(robot_id, "chest")
     return "The robot is performing chest exercises."
 
 
 @mcp.tool()
-def dance_eight() -> str:
+def dance_eight(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance eight."""
-    executor.execute_action("dance_eight")
+    executor.execute_action(robot_id, "dance_eight")
     return "The robot is performing dance eight."
 
 
 @mcp.tool()
-def dance_five() -> str:
+def dance_five(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance five."""
-    executor.execute_action("dance_five")
+    executor.execute_action(robot_id, "dance_five")
     return "The robot is performing dance five."
 
 
 @mcp.tool()
-def dance_four() -> str:
+def dance_four(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance four."""
-    executor.execute_action("dance_four")
+    executor.execute_action(robot_id, "dance_four")
     return "The robot is performing dance four."
 
 
 @mcp.tool()
-def dance_nine() -> str:
+def dance_nine(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance nine."""
-    executor.execute_action("dance_nine")
+    executor.execute_action(robot_id, "dance_nine")
     return "The robot is performing dance nine."
 
 
 @mcp.tool()
-def dance_seven() -> str:
+def dance_seven(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance seven."""
-    executor.execute_action("dance_seven")
+    executor.execute_action(robot_id, "dance_seven")
     return "The robot is performing dance seven."
 
 
 @mcp.tool()
-def dance_six() -> str:
+def dance_six(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance six."""
-    executor.execute_action("dance_six")
+    executor.execute_action(robot_id, "dance_six")
     return "The robot is performing dance six."
 
 
 @mcp.tool()
-def dance_ten() -> str:
+def dance_ten(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance ten."""
-    executor.execute_action("dance_ten")
+    executor.execute_action(robot_id, "dance_ten")
     return "The robot is performing dance ten."
 
 
 @mcp.tool()
-def dance_three() -> str:
+def dance_three(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance three."""
-    executor.execute_action("dance_three")
+    executor.execute_action(robot_id, "dance_three")
     return "The robot is performing dance three."
 
 
 @mcp.tool()
-def dance_two() -> str:
+def dance_two(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform dance two."""
-    executor.execute_action("dance_two")
+    executor.execute_action(robot_id, "dance_two")
     return "The robot is performing dance two."
 
 
 @mcp.tool()
-def go_forward() -> str:
+def go_forward(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to move forward in the direction it is currently facing."""
-    executor.execute_action("go_forward")
+    executor.execute_action(robot_id, "go_forward")
     return "The robot is moving forward."
 
 
 @mcp.tool()
-def kung_fu() -> str:
+def kung_fu(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform kung fu moves."""
-    executor.execute_action("kung_fu")
+    executor.execute_action(robot_id, "kung_fu")
     return "The robot is performing kung fu moves."
 
 
 @mcp.tool()
-def left_kick() -> str:
+def left_kick(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a left kick."""
-    executor.execute_action("left_kick")
+    executor.execute_action(robot_id, "left_kick")
     return "The robot is performing a left kick."
 
 
 @mcp.tool()
-def left_move_fast() -> str:
+def left_move_fast(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to move left quickly."""
-    executor.execute_action("left_move_fast")
+    executor.execute_action(robot_id, "left_move_fast")
     return "The robot is moving left quickly."
 
 
 @mcp.tool()
-def left_shot_fast() -> str:
+def left_shot_fast(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a fast left punch."""
-    executor.execute_action("left_shot_fast")
+    executor.execute_action(robot_id, "left_shot_fast")
     return "The robot is performing a fast left punch."
 
 
 @mcp.tool()
-def left_uppercut() -> str:
+def left_uppercut(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a left uppercut."""
-    executor.execute_action("left_uppercut")
+    executor.execute_action(robot_id, "left_uppercut")
     return "The robot is performing a left uppercut."
 
 
 @mcp.tool()
-def push_ups() -> str:
+def push_ups(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform push-ups."""
-    executor.execute_action("push_ups")
+    executor.execute_action(robot_id, "push_ups")
     return "The robot is performing push-ups."
 
 
 @mcp.tool()
-def right_kick() -> str:
+def right_kick(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a right kick."""
-    executor.execute_action("right_kick")
+    executor.execute_action(robot_id, "right_kick")
     return "The robot is performing a right kick."
 
 
 @mcp.tool()
-def right_move_fast() -> str:
+def right_move_fast(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to move right quickly."""
-    executor.execute_action("right_move_fast")
+    executor.execute_action(robot_id, "right_move_fast")
     return "The robot is moving right quickly."
 
 
 @mcp.tool()
-def right_shot_fast() -> str:
+def right_shot_fast(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a fast right punch."""
-    executor.execute_action("right_shot_fast")
+    executor.execute_action(robot_id, "right_shot_fast")
     return "The robot is performing a fast right punch."
 
 
 @mcp.tool()
-def right_uppercut() -> str:
+def right_uppercut(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform a right uppercut."""
-    executor.execute_action("right_uppercut")
+    executor.execute_action(robot_id, "right_uppercut")
     return "The robot is performing a right uppercut."
 
 
 @mcp.tool()
-def sit_ups() -> str:
+def sit_ups(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform sit-ups."""
-    executor.execute_action("sit_ups")
+    executor.execute_action(robot_id, "sit_ups")
     return "The robot is performing sit-ups."
 
 
 @mcp.tool()
-def squat() -> str:
+def squat(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to squat down."""
-    executor.execute_action("squat")
+    executor.execute_action(robot_id, "squat")
     return "The robot is squatting down."
 
 
 @mcp.tool()
-def squat_up() -> str:
+def squat_up(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to stand up from a squat."""
-    executor.execute_action("squat_up")
+    executor.execute_action(robot_id, "squat_up")
     return "The robot is standing up from a squat."
 
 
 @mcp.tool()
-def stand() -> str:
+def stand(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to stand up and maintain a standing position."""
-    executor.execute_action("stand")
+    executor.execute_action(robot_id, "stand")
     return "The robot is standing up."
 
 
 @mcp.tool()
-def stand_up_back() -> str:
+def stand_up_back(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to stand up from the back."""
-    executor.execute_action("stand_up_back")
+    executor.execute_action(robot_id, "stand_up_back")
     return "The robot is standing up from the back."
 
 
 @mcp.tool()
-def stand_up_front() -> str:
+def stand_up_front(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to stand up from the front."""
-    executor.execute_action("stand_up_front")
+    executor.execute_action(robot_id, "stand_up_front")
     return "The robot is standing up from the front."
 
 
 @mcp.tool()
-def stepping() -> str:
+def stepping(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform stepping motions."""
-    executor.execute_action("stepping")
+    executor.execute_action(robot_id, "stepping")
     return "The robot is performing stepping motions."
 
 
 @mcp.tool(name="stop")
-def stop() -> str:
+def stop(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform stopping motions."""
-    executor.execute_action("stop")
+    executor.execute_action(robot_id, "stop")
     return "The robot is stopping."
 
 
 @mcp.tool()
-def turn_left() -> str:
+def turn_left(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to turn left."""
-    executor.execute_action("turn_left")
+    executor.execute_action(robot_id, "turn_left")
     return "The robot is turning left."
 
 
 @mcp.tool()
-def turn_right() -> str:
+def turn_right(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to turn right."""
-    executor.execute_action("turn_right")
+    executor.execute_action(robot_id, "turn_right")
     return "The robot is turning right."
 
 
 @mcp.tool()
-def twist() -> str:
+def twist(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to twist its body."""
-    executor.execute_action("twist")
+    executor.execute_action(robot_id, "twist")
     return "The robot is twisting its body."
 
 
 @mcp.tool()
-def wave() -> str:
+def wave(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to wave its hand."""
-    executor.execute_action("wave")
+    executor.execute_action(robot_id, "wave")
     return "The robot is waving its hand."
 
 
 @mcp.tool()
-def weightlifting() -> str:
+def weightlifting(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform weightlifting."""
-    executor.execute_action("weightlifting")
+    executor.execute_action(robot_id, "weightlifting")
     return "The robot is performing weightlifting."
 
 
 @mcp.tool()
-def wing_chun() -> str:
+def wing_chun(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Command the robot to perform Wing Chun moves."""
-    executor.execute_action("wing_chun")
+    executor.execute_action(robot_id, "wing_chun")
     return "The robot is performing Wing Chun moves."
 
 
 @mcp.tool()
-def get_image() -> str:
+def get_image(
+    robot_id: Annotated[
+        Literal[
+            "robot_1",
+            "robot_2",
+            "robot_3",
+            "robot_4",
+            "robot_5",
+            "robot_6",
+            "robot_7",
+            "robot_8",
+            "robot_9",
+        ],
+        Field(description="Robot ID"),
+    ],
+) -> str:
     """Get the current image from the robot's camera."""
 
     image_path = executor.get_image()
