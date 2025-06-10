@@ -101,22 +101,27 @@ class ApiProxy:
         clean_name = self._sanitize_action_name(action_name)
         if clean_name == "stop":
             self._send_request(
-                method="StopBusServo",
+                method="StopAction",
                 robot_id=robot_id,
-                action="StopAction",
-                log_msg="Action run_stop_action() successful.",
+                action="stop",
+                log_msg=f"Action run_stop_action() successful for robot_id={robot_id}.",
             )
-            self.logger.info("Stop action requested, stopping current action.")
+            self.logger.info(
+                "Stop action requested for robot_id=%s, stopping current action.",
+                robot_id,
+            )
             return
         action = self._get_action(clean_name)
         if not action:
-            self.logger.error("Action '%s' not found.", clean_name)
+            self.logger.error(
+                "Action '%s' not found for robot_id=%s.", clean_name, robot_id
+            )
             return
         self._send_request(
             method="RunAction",
             robot_id=robot_id,
             action=clean_name,
-            log_msg=f"Action run_action({clean_name}) successful.",
+            log_msg=f"Action run_action({clean_name}) successful for robot_id={robot_id}.",
         )
 
     def _send_request(

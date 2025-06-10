@@ -24,6 +24,7 @@ executor = ApiProxy()
 def back_fast(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -46,6 +47,7 @@ def back_fast(
 def bow(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -68,6 +70,7 @@ def bow(
 def chest(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -90,6 +93,7 @@ def chest(
 def dance_eight(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -112,6 +116,7 @@ def dance_eight(
 def dance_five(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -134,6 +139,7 @@ def dance_five(
 def dance_four(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -156,6 +162,7 @@ def dance_four(
 def dance_nine(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -178,6 +185,7 @@ def dance_nine(
 def dance_seven(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -200,6 +208,7 @@ def dance_seven(
 def dance_six(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -222,6 +231,7 @@ def dance_six(
 def dance_ten(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -244,6 +254,7 @@ def dance_ten(
 def dance_three(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -266,6 +277,7 @@ def dance_three(
 def dance_two(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -288,6 +300,7 @@ def dance_two(
 def go_forward(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -310,6 +323,7 @@ def go_forward(
 def kung_fu(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -332,6 +346,7 @@ def kung_fu(
 def left_kick(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -354,6 +369,7 @@ def left_kick(
 def left_move_fast(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -376,6 +392,7 @@ def left_move_fast(
 def left_shot_fast(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -398,6 +415,7 @@ def left_shot_fast(
 def left_uppercut(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -420,6 +438,7 @@ def left_uppercut(
 def push_ups(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -442,6 +461,7 @@ def push_ups(
 def right_kick(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -464,6 +484,7 @@ def right_kick(
 def right_move_fast(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -486,6 +507,7 @@ def right_move_fast(
 def right_shot_fast(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -508,6 +530,7 @@ def right_shot_fast(
 def right_uppercut(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -530,6 +553,7 @@ def right_uppercut(
 def sit_ups(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -552,6 +576,7 @@ def sit_ups(
 def squat(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -574,6 +599,7 @@ def squat(
 def squat_up(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -596,6 +622,7 @@ def squat_up(
 def stand(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -618,6 +645,7 @@ def stand(
 def stand_up_back(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -640,6 +668,7 @@ def stand_up_back(
 def stand_up_front(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -662,6 +691,7 @@ def stand_up_front(
 def stepping(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -684,6 +714,7 @@ def stepping(
 def stop(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -706,6 +737,7 @@ def stop(
 def turn_left(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -728,6 +760,7 @@ def turn_left(
 def turn_right(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -750,6 +783,7 @@ def turn_right(
 def twist(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -772,6 +806,7 @@ def twist(
 def wave(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -794,6 +829,7 @@ def wave(
 def weightlifting(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -816,6 +852,7 @@ def weightlifting(
 def wing_chun(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -838,6 +875,7 @@ def wing_chun(
 def get_image(
     robot_id: Annotated[
         Literal[
+            "all",
             "robot_1",
             "robot_2",
             "robot_3",
@@ -852,17 +890,13 @@ def get_image(
     ],
 ) -> str:
     """Get the current image from the robot's camera."""
-
     image_path = executor.get_image(robot_id)
     if not image_path:
         return "No image available."
-    # Return the image path or URL
-    else:
-        img = PILImage.open(image_path)
-        buf = io.BytesIO()
-        img.save(buf, format="JPEG")
-        img_bytes = buf.getvalue()
-        return Image(data=img_bytes, format="jpeg")
+    img = PILImage.open(image_path)
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG")
+    return Image(data=buf.getvalue(), format="jpeg")
 
 
 if __name__ == "__main__":
