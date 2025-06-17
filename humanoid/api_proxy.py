@@ -10,6 +10,7 @@ ROBOT_API_HOST = os.environ.get("ROBOT_API_HOST", "localhost")
 ROBOT_API_PORT = os.environ.get("ROBOT_API_PORT", "9030")
 ROBOT_IMAGE_API_PORT = os.environ.get("ROBOT_IMAGE_API_PORT", "8080")
 ROBOT_API_PROTOCOL = os.environ.get("ROBOT_API_PROTOCOL", "http")
+SESSION_KEY = os.environ.get("SESSION_KEY", "share")
 ROBOT_IMAGE_API_URL = os.environ.get(
     "ROBOT_IMAGE_API_URL",
     f"{ROBOT_API_PROTOCOL}://{ROBOT_API_HOST}:{ROBOT_IMAGE_API_PORT}/?action=snapshot",
@@ -133,7 +134,11 @@ class ApiProxy:
     ) -> Optional[Dict[str, Any]]:
         data = {"method": method, "action": action}
         try:
-            response = requests.post(ROBOT_API_URL + robot_id, json=data, timeout=3)
+            response = requests.post(
+                ROBOT_API_URL + robot_id + "?session_key=" + SESSION_KEY,
+                json=data,
+                timeout=3,
+            )
             response.raise_for_status()
             self.logger.info("%s Response: %s", log_msg, response.json())
             return response.json()
@@ -143,7 +148,10 @@ class ApiProxy:
 
     def get_image(self, robot_id: str) -> Optional[str]:
         try:
-            response = requests.get(ROBOT_IMAGE_API_URL + robot_id, timeout=3)
+            response = requests.get(
+                ROBOT_IMAGE_API_URL + robot_id + "?session_key=" + SESSION_KEY,
+                timeout=3,
+            )
             response.raise_for_status()
             if response.headers.get("Content-Type") == "image/jpeg":
                 with tempfile.NamedTemporaryFile(
